@@ -65,6 +65,8 @@ Partial Class Form1
         '
         'OpenButton
         '
+        Me.OpenButton.AutoSize = True
+        Me.OpenButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.OpenButton.Depth = 0
         Me.OpenButton.Location = New System.Drawing.Point(394, 103)
         Me.OpenButton.Margin = New System.Windows.Forms.Padding(4, 6, 4, 6)
@@ -72,7 +74,7 @@ Partial Class Form1
         Me.OpenButton.MouseState = MaterialSkin.MouseState.HOVER
         Me.OpenButton.Name = "OpenButton"
         Me.OpenButton.Primary = False
-        Me.OpenButton.Size = New System.Drawing.Size(94, 23)
+        Me.OpenButton.Size = New System.Drawing.Size(91, 23)
         Me.OpenButton.TabIndex = 1
         Me.OpenButton.Text = "Select File"
         Me.OpenButton.UseVisualStyleBackColor = True
@@ -186,7 +188,7 @@ Partial Class Form1
         '
         Me.NanoR2.AutoSize = True
         Me.NanoR2.Depth = 0
-        Me.NanoR2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!)
+        Me.NanoR2.Font = New System.Drawing.Font("Roboto", 10.0!)
         Me.NanoR2.Location = New System.Drawing.Point(16, 273)
         Me.NanoR2.Margin = New System.Windows.Forms.Padding(0)
         Me.NanoR2.MouseLocation = New System.Drawing.Point(-1, -1)
@@ -256,6 +258,8 @@ Partial Class Form1
         '
         'RefreshList
         '
+        Me.RefreshList.AutoSize = True
+        Me.RefreshList.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.RefreshList.Depth = 0
         Me.RefreshList.Location = New System.Drawing.Point(418, 206)
         Me.RefreshList.Margin = New System.Windows.Forms.Padding(4, 6, 4, 6)
