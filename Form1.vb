@@ -1,7 +1,9 @@
-﻿Imports MaterialSkin
+﻿Imports System.ComponentModel
+Imports MaterialSkin
 Public Class Form1
 
     Dim AModel As ArduinoUploader.Hardware.ArduinoModel
+    Dim uploadfail As Boolean
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim SkinManager As MaterialSkinManager = MaterialSkinManager.Instance
@@ -13,12 +15,23 @@ Public Class Form1
     End Sub
 
     Private Sub UploadHex_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles UploadHex.DoWork
+        uploadfail = False
         Dim uploader As New ArduinoUploader.ArduinoSketchUploader(New ArduinoUploader.ArduinoSketchUploaderOptions() With {
                                                                   .FileName = SelectedFile.Text,
                                                                   .PortName = comPorts.SelectedItem,
                                                                   .ArduinoModel = AModel
                                                                   })
-        uploader.UploadSketch()
+        Try
+            uploader.UploadSketch()
+        Catch ex As Exception
+            uploadfail = True
+            If ex.ToString.Contains("Difference encountered during verification!") Then
+                MessageBox.Show("Difference encountered during verification!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Else
+                MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error)
+            End If
+        End Try
+        ProgressBar1.Value = 100
     End Sub
 
     Private Sub OpenButton_Click(sender As Object, e As EventArgs) Handles OpenButton.Click
@@ -69,10 +82,17 @@ Public Class Form1
         If fail = False Then
             Dim result As DialogResult = MessageBox.Show("Please ensure that the hex/binary file you have selected does NOT contain the Arduino Bootloader otherwise verification will fail.", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
             If result = DialogResult.OK Then
+                ProgressBar1.Value = 0
                 UploadHex.RunWorkerAsync()
             End If
         Else
             MsgBox("Operation failed. Please check your settings")
+        End If
+    End Sub
+
+    Private Sub UploadHex_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles UploadHex.RunWorkerCompleted
+        If uploadfail = False Then
+            MessageBox.Show("Upload was successfully completed!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
     End Sub
 End Class
