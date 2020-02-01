@@ -23,6 +23,7 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.UploadHex = New System.ComponentModel.BackgroundWorker()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
@@ -319,6 +320,10 @@ Partial Class Form1
         Me.Controls.Add(Me.MaterialLabel1)
         Me.Controls.Add(Me.OpenButton)
         Me.Controls.Add(Me.ProgressBar1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(500, 500)
+        Me.MinimumSize = New System.Drawing.Size(500, 500)
         Me.Name = "Form1"
         Me.Text = "Arduino Hex Uploader"
         Me.ResumeLayout(False)
