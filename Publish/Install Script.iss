@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Arduino Hex Uploader"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.1"
 #define MyAppPublisher "SuperNinja_4965"
 #define MyAppURL "https://github.com/SuperNinja-4965/Arduino-Hex-Uploader"
 #define MyAppExeName "Arduino Hex Uploader.exe"
