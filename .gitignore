@@ -4,3 +4,4 @@ obj/Debug
 # Visual Studio cache directory
 .vs/
 obj/Debug/Arduino Hex Uploader.vbprojAssemblyReference.cache
+Publish/
