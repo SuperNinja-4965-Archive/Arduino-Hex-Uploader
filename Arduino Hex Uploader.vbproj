@@ -29,7 +29,7 @@
     <ProductName>Arduino Hex Uploader</ProductName>
     <PublisherName>SuperNinja_4965</PublisherName>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.1.0.0</ApplicationVersion>
+    <ApplicationVersion>1.2.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -264,6 +264,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="hexIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".hex">
+      <Visible>False</Visible>
+      <Description>Hex Binary Files</Description>
+      <Progid>1</Progid>
+      <DefaultIcon>hexIcon.ico</DefaultIcon>
+    </FileAssociation>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

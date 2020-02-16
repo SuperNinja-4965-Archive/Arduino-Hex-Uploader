@@ -12,6 +12,15 @@ Public Class Form1
         SkinManager.ColorScheme = New ColorScheme(Primary.Purple800, Primary.Purple900, Primary.Purple500, Accent.Purple200, TextShade.WHITE)
         GetCOMPorts()
         System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
+        Try
+            Dim receivedText As String = Command()
+
+            If receivedText.Contains(Chr(34)) Then
+                receivedText = receivedText.Replace(Chr(34), "")
+            End If
+            SelectedFile.Text = receivedText
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub UploadHex_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles UploadHex.DoWork
