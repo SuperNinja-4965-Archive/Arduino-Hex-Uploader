@@ -1,5 +1,7 @@
 ﻿Imports System.ComponentModel
+Imports ArduinoUploader
 Imports MaterialSkin
+Imports NLog
 Public Class Form1
 
     Dim AModel As ArduinoUploader.Hardware.ArduinoModel
@@ -11,7 +13,7 @@ Public Class Form1
         SkinManager.Theme = MaterialSkinManager.Themes.DARK
         SkinManager.ColorScheme = New ColorScheme(Primary.Purple800, Primary.Purple900, Primary.Purple500, Accent.Purple200, TextShade.WHITE)
         GetCOMPorts()
-        System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
+        ' System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = False
         Try
             Dim receivedText As String = Command()
 
@@ -26,8 +28,8 @@ Public Class Form1
     Private Sub UploadHex_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles UploadHex.DoWork
         uploadfail = False
         Dim uploader As New ArduinoUploader.ArduinoSketchUploader(New ArduinoUploader.ArduinoSketchUploaderOptions() With {
-                                                                  .FileName = SelectedFile.Text,
-                                                                  .PortName = comPorts.SelectedItem,
+                                                                  .FileName = SelectedFileVar,
+                                                                  .PortName = SelectedPortVar,
                                                                   .ArduinoModel = AModel
                                                                   })
         Try
@@ -40,7 +42,6 @@ Public Class Form1
                 MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error)
             End If
         End Try
-        ProgressBar1.Value = 100
     End Sub
 
     Private Sub OpenButton_Click(sender As Object, e As EventArgs) Handles OpenButton.Click
@@ -59,6 +60,9 @@ Public Class Form1
     Private Sub RefreshList_Click(sender As Object, e As EventArgs) Handles RefreshList.Click
         GetCOMPorts()
     End Sub
+
+    Dim SelectedFileVar As String
+    Dim SelectedPortVar As String
 
     Private Sub MaterialRaisedButton1_Click(sender As Object, e As EventArgs) Handles MaterialRaisedButton1.Click
         Dim fail As Boolean = True
@@ -92,6 +96,9 @@ Public Class Form1
             Dim result As DialogResult = MessageBox.Show("Please ensure that the hex/binary file you have selected does NOT contain the Arduino Bootloader otherwise verification will fail.", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
             If result = DialogResult.OK Then
                 ProgressBar1.Value = 0
+                SelectedFileVar = SelectedFile.Text
+                SelectedPortVar = comPorts.SelectedItem
+                MaterialRaisedButton1.Enabled = False
                 UploadHex.RunWorkerAsync()
             End If
         Else
@@ -101,7 +108,11 @@ Public Class Form1
 
     Private Sub UploadHex_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles UploadHex.RunWorkerCompleted
         If uploadfail = False Then
+            ProgressBar1.Value = 100
             MessageBox.Show("Upload was successfully completed!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            ProgressBar1.Value = 50
         End If
+        MaterialRaisedButton1.Enabled = True
     End Sub
 End Class
